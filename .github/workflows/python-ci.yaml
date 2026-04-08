@@ -45,27 +45,20 @@ jobs:
     - name: Mutation Testing
       continue-on-error: true
       run: |
-            
             cosmic-ray init search_config.toml search_db.sqlite
-            
             cosmic-ray exec search_config.toml search_db.sqlite
-            
-            cr-report search_db.sqlite > mutation_results.txt
+            cr-report search_db.sqlite > mutation_results.html
 
-    - name: Mutation Testing
-      continue-on-error: true # Pasul este optional conform cerintei
-      run: |
-        cosmic-ray -s function.py -t "python -m unittest discover" > mutation_results.txt
 
     - name: Upload Mutation Artifact
       uses: actions/upload-artifact@v4
       with:
         name: mutation-testing-results
-        path: mutation_results.txt
+        path: mutation_results.html
 
-    - name: Slack or Email Notification on Failure
-      if: failure()
-      uses: rtCamp/action-slack-notify@v2 # Exemplu pentru Slack
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      continue-on-error: true # Nu blocam pipeline-ul dacă notificarea eșuează
+    # - name: Slack or Email Notification on Failure
+    #   if: failure()
+    #   uses: rtCamp/action-slack-notify@v2 # Exemplu pentru Slack
+    #   env:
+    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    #   continue-on-error: true # Nu blocam pipeline-ul dacă notificarea eșuează
