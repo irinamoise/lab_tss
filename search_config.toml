@@ -1,0 +1,8 @@
+[cosmic-ray]
+module-path = "function.py"
+python-version = "3.13" 
+test-command = "python -m unittest manual_tests.py"
+test-command = "python -m unittest test_random.py"
+timeout = 20.0  
+[cosmic-ray.distributor]
+name = "local"
